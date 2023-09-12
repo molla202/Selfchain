@@ -1,7 +1,13 @@
 ![image](https://github.com/molla202/Selfchain/assets/91562185/c898d982-4ea4-49d0-bdc2-70a8edd547fb)
 
+# Update Packages
 ```
+sudo apt update && apt upgrade -y
+sudo apt install curl git jq lz4 build-essential unzip fail2ban ufw -y
+```
+
 # Install Go
+```
 ver="1.20"
 wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go
