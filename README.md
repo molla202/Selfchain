@@ -7,6 +7,8 @@ dicorda griyoruz .
 ```
 selfchaind status
 ```
+* id olarak yazıyor.
+![image](https://github.com/molla202/Selfchain/assets/91562185/ce062d3a-bd58-47db-ac79-2700677944b9)
 
 
 # Update Packages
