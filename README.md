@@ -101,7 +101,7 @@ s%^ws-address = \"0.0.0.0:8546\"%ws-address = \"0.0.0.0:${SELF_PORT}546\"%" $HOM
 
 # config.toml port ayarı
 sed -i.bak -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${SELF_PORT}658\"%; 
-s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${SELF_PORT}657\"%; 
+s%^laddr = \"tcp://0.0.0.0:26657\"%laddr = \"tcp://0.0.0.0:${SELF_PORT}657\"%; 
 s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${SELF_PORT}060\"%;
 s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${SELF_PORT}656\"%;
 s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${SELF_PORT}656\"%;
