@@ -86,6 +86,27 @@ sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.selfchain/config/config.tom
 sed -i 's|^prometheus *=.*|prometheus = true|' $HOME/.selfchain/config/config.toml
 sed -i -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.005uself\"/" $HOME/.selfchain/config/app.toml
 ```
+### Port değiştirme
+```
+echo "export SELF_PORT="42"" >> $HOME/.bash_profile
+source $HOME/.bash_profile
+
+# app.toml da port değiştiriyoruz çakışmasınlar :D
+sed -i.bak -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${SELF_PORT}317\"%;
+s%^address = \":8080\"%address = \":${SELF_PORT}080\"%;
+s%^address = \"0.0.0.0:9090\"%address = \"0.0.0.0:${SELF_PORT}090\"%; 
+s%^address = \"0.0.0.0:9091\"%address = \"0.0.0.0:${SELF_PORT}091\"%; 
+s%^address = \"0.0.0.0:8545\"%address = \"0.0.0.0:${SELF_PORT}545\"%; 
+s%^ws-address = \"0.0.0.0:8546\"%ws-address = \"0.0.0.0:${SELF_PORT}546\"%" $HOME/.selfchain/config/app.toml
+
+# config.toml port ayarı
+sed -i.bak -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${SELF_PORT}658\"%; 
+s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${SELF_PORT}657\"%; 
+s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${SELF_PORT}060\"%;
+s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${SELF_PORT}656\"%;
+s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${SELF_PORT}656\"%;
+s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${SELF_PORT}660\"%" $HOME/.selfchain/config/config.toml
+```
 ```
 # Set Service file
 sudo tee /etc/systemd/system/selfchaind.service > /dev/null << EOF
@@ -114,4 +135,56 @@ sudo systemctl enable selfchaind
 # Start the Node
 sudo systemctl restart selfchaind
 sudo journalctl -fu selfchaind -o cat
+```
+### validator
+```
+selfchaind tx staking create-validator \
+    --amount=1000000000uself \
+    --node http://165.232.125.66:26657 \
+    --pubkey=$(selfchaind tendermint show-validator) \
+    --moniker="moniker-yazınız" \
+    --website="https://selfchain.xyz" \
+    --details="This is a validator that was added post genesis" \
+    --chain-id="self-dev-1" \
+    --commission-rate="0.10" \
+    --commission-max-rate="0.15" \
+    --commission-max-change-rate="0.05" \
+    --min-self-delegation="1000000000" \
+    --broadcast-mode block \
+    --gas="auto" \
+    --gas-adjustment="1.2" \
+    --gas-prices="0.5uself" \
+    --keyring-backend file \
+    --keyring-dir $HOME/keys \
+    --from="adres-yazınız"
+```
+### edit validator
+```
+selfchaind tx staking edit-validator \
+    --new-moniker "moniker-yazınız" \
+    --from="adres-yazınız" \
+    --identity="" \
+    --website="" \
+    --details="❤️" \
+    --security-contact="" \
+    --broadcast-mode block \
+    --gas="auto" \
+    --gas-adjustment="1.2" \
+    --gas-prices="0.5uself" \
+    --keyring-backend file \
+    --keyring-dir $HOME/keys \
+    -y
+```
+### Delege (adres kısmını ve valoper kısmını değiştriniz)
+```
+selfchaind tx staking delegate valoper-yazınız 28989812716uself\
+    --node http://165.232.125.66:26657 \
+    --chain-id="self-dev-1" \
+    --broadcast-mode block \
+    --gas="auto" \
+    --gas-adjustment="1.2" \
+    --gas-prices="0.5uself" \
+    --keyring-backend file \
+    --keyring-dir $HOME/keys \
+    --from="adres-yazınız"
 ```
