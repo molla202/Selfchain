@@ -1,6 +1,8 @@
+
 ![image](https://github.com/molla202/Selfchain/assets/91562185/c898d982-4ea4-49d0-bdc2-70a8edd547fb)
-NOT: https://discord.gg/GDe7NDzk
-dicorda griyoruz .
+
+
+
 ![image](https://github.com/molla202/Selfchain/assets/91562185/14802209-1a7e-49f5-92af-1b8b0751cd3b)
 * kanala validator rol deyince bota mesaj atıyor.
 * sunucuda aşağıdaki kodu yazıyoruz ve node id kısmını alıp mesaj atan bota verıyoruz sonra sunucu ipsini yazıyoruz bunları node eşleşmesi bitince yapıyoruz
@@ -10,6 +12,11 @@ selfchaind status
 * id olarak yazıyor.
 ![image](https://github.com/molla202/Selfchain/assets/91562185/ce062d3a-bd58-47db-ac79-2700677944b9)
 
+
+https://explorer.nodestake.top/self-testnet
+
+NOT: https://discord.gg/GDe7NDzk
+dicorda griyoruz .
 
 # Update Packages
 ```
